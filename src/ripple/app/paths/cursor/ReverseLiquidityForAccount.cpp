@@ -104,7 +104,7 @@ TER PathCursor::reverseLiquidityForAccount () const
 
     WriteLog (lsTRACE, RippleCalc)
         << "reverseLiquidityForAccount>"
-        << " nodeIndex_=%d/%d" << nodeIndex_ << "/" << lastNodeIndex
+        << " nodeIndex_=" << nodeIndex_ << "/" << lastNodeIndex
         << " previousAccountID=" << previousAccountID
         << " node.account_=" << node().account_
         << " nextAccountID=" << nextAccountID
