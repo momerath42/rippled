@@ -899,11 +899,26 @@ void Pathfinder::addLink(
                         book->getCurrencyOut(),
                         book->getIssuerOut()))
                     { // Don't want the book if we've already seen the issuer
-                        // add the order book itself
-                        newPath.emplace_back(
-                            STPathElement::typeCurrency | STPathElement::typeIssuer,
-                            xrpAccount(), book->getCurrencyOut(),
-                            book->getIssuerOut());
+
+                        // book -> account -> book
+                        if ((newPath.size() >= 2) &&
+                            (newPath.back().isAccount ()) &&
+                            (newPath[newPath.size() - 2].isOffer ()))
+                        {
+                            // replace the redundant account with the order book
+                            newPath[newPath.size() - 1] = STPathElement (
+                                STPathElement::typeCurrency | STPathElement::typeIssuer,
+                                xrpAccount(), book->getCurrencyOut(),
+                                book->getIssuerOut());
+                        }
+                        else
+                        {
+                            // add the order book
+                            newPath.emplace_back(
+                                STPathElement::typeCurrency | STPathElement::typeIssuer,
+                                xrpAccount(), book->getCurrencyOut(),
+                                book->getIssuerOut());
+			}
 
                         if (book->getIssuerOut() == mDstAccountID &&
                             book->getCurrencyOut() == mDstAmount.getCurrency())
