@@ -471,10 +471,7 @@ TER PathCursor::forwardLiquidityForAccount () const
 
         node().saFwdDeliver.clear (node().saRevDeliver);
 
-        if (previousNode().saFwdDeliver
-            // Previous wants to deliver
-            && node().saRevIssue)
-            // Current wants issue.
+        if (previousNode().saFwdDeliver && node().saRevDeliver)
         {
             // Rate : 1.0 : transfer_rate
             rippleLiquidity (
